@@ -33,9 +33,9 @@ class GameViewController: UIViewController {
     }
     
     func resetGame() {
-        for i in 0..<buttonArray.count{
-                buttonArray[i].setBackgroundImage(nil, for: UIControl.State.normal)
-                buttonArray[i].isEnabled = true
+        for button in buttonArray{
+            button.setBackgroundImage(nil, for: UIControl.State.normal)
+            button.isEnabled = true
         }
         buttonArray.removeAll()
         ticTacToeBoard.resetBoard()
