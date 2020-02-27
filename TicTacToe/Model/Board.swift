@@ -8,25 +8,17 @@
 import Foundation
 import UIKit
 struct Board {
-    var player = 1
+    
     var clickCount = 0
     var winner = Winner()
-    var boardIndex = [-1, -1 , -1, -1, -1, -1, -1, -1, -1] //Stores the value of every board index the user taps on based on the value of button tag(here, button tag 0...9 acts as index)
-    var value = 0
-    var image = ""
+    var player = Player()
+    var boardIndex = [-1, -1 , -1, -1, -1, -1, -1, -1, -1] //Stores the value of every board index the player taps on based on the value of button tag(here, button tag 0...8 acts as array index)
+    var image = "" //It will store the name of image asset sent from image-selection alert box
     
-    
-    mutating func updateBoard(buttonTag: Int) ->Int{
-        if(player == 1 ){
-            value = 0 // For findind the winner
-            player = 2 // Change the player after every click
-        }
-        else {
-            value = 1
-            player = 1
-        }
+    mutating func updateBoardStatus(buttonTag: Int) ->Int{
+        player.updatePlayerStatus()
         clickCount += 1
-        boardIndex[buttonTag] = value
+        boardIndex[buttonTag] = player.value
         //check for winner after every click...
         return winner.getWinner(boardIndex: boardIndex)
     }
@@ -37,4 +29,10 @@ struct Board {
         return buttonImage
     }
     
+    mutating func resetBoard(){
+        boardIndex = [-1, -1 , -1, -1, -1, -1, -1, -1, -1]
+        clickCount = 0
+        player.currentPlayer = 1
+        winner.flag = -1
+    }
 }

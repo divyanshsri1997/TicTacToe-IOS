@@ -20,9 +20,9 @@ class GameViewController: UIViewController {
     
     @IBAction func buttonPressed(_ sender: UIButton){
         buttonArray.append(sender)
-        //All 9 button tags are initialized from 0...9 to maintain the board index
-        let result = ticTacToeBoard.updateBoard(buttonTag: sender.tag)
         sender.setBackgroundImage(UIImage(named: ticTacToeBoard.updateBoardImage()), for: UIControl.State.normal)
+        //All 9 button tags are initialized from 0...8 to maintain the board index
+        let result = ticTacToeBoard.updateBoardStatus(buttonTag: sender.tag)
         displayresult(flag: result)
         sender.isEnabled = false
     }
@@ -37,11 +37,8 @@ class GameViewController: UIViewController {
                 buttonArray[i].setBackgroundImage(nil, for: UIControl.State.normal)
                 buttonArray[i].isEnabled = true
         }
-        ticTacToeBoard.boardIndex = [-1, -1 , -1, -1, -1, -1, -1, -1, -1]
         buttonArray.removeAll()
-        ticTacToeBoard.clickCount = 0
-        ticTacToeBoard.player = 1
-        winner.flag = -1
+        ticTacToeBoard.resetBoard()
     }
     
     func displayresult(flag: Int){
@@ -51,7 +48,6 @@ class GameViewController: UIViewController {
         if(flag == 1){
             updateAlertLabel(message: "Player 2 won !!!")
         }
-        //Draw condition
         if(ticTacToeBoard.clickCount == 9 && flag == -1){
             updateAlertLabel(message: "Draw...")
         }
