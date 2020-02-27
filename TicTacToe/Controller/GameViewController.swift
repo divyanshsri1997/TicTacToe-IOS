@@ -19,12 +19,13 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func buttonPressed(_ sender: UIButton){
-        buttonArray.append(sender)
-        sender.setBackgroundImage(UIImage(named: ticTacToeBoard.updateBoardImage()), for: UIControl.State.normal)
-        //All 9 button tags are initialized from 0...8 to maintain the board index
-        let result = ticTacToeBoard.updateBoardStatus(buttonTag: sender.tag)
-        displayresult(flag: result)
-        sender.isEnabled = false
+        if(sender.currentBackgroundImage == nil){
+            buttonArray.append(sender)
+            sender.setBackgroundImage(UIImage(named: ticTacToeBoard.updateBoardImage()), for: UIControl.State.normal)
+            //All 9 button tags are initialized from 0...8 to maintain the board index
+            let result = ticTacToeBoard.updateBoardStatus(buttonTag: sender.tag)
+            displayresult(flag: result)
+        }
     }
     
     @IBAction func restartPressed(_ sender: UIButton) {
@@ -35,7 +36,6 @@ class GameViewController: UIViewController {
     func resetGame() {
         for button in buttonArray{
             button.setBackgroundImage(nil, for: UIControl.State.normal)
-            button.isEnabled = true
         }
         buttonArray.removeAll()
         ticTacToeBoard.resetBoard()
